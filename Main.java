@@ -38,20 +38,5 @@ public class Main {
         if(!analyzer.analyzeArguments(args)) return;
 
         sorter.mergeSortString(inputFiles, outputFile, inAscending, isInteger);
-        //if(!isInteger && !inAscending) sorter.mergeSortStringDescending(inputFiles, outputFile);
-        //if(!isInteger && inAscending)  sorter.mergeSortStringAscending(inputFiles, outputFile);
-        if(isInteger && !inAscending) return;//
-        if(isInteger && inAscending) return;//Fix later
-    }
-
-    private static void printStartMessage(){
-        System.out.println("MERGE SORT PROGRAM. Java version 1.8.0_351");
-        System.out.println("Usage: testTaskMergeSort.exe [-sorting_mode] [-options] [output_file] [input_files]");
-        System.out.println("sorting_mode argument is necessery. sorting_mode include: ");
-        System.out.println("\t-s for sorting strings");
-        System.out.println("\t-i for sorting integers");
-        System.out.println("where options include: ");
-        System.out.println("\t-a for sorting in ascending order");
-        System.out.println("\t-d for sorting in descending order");
     }
 }
