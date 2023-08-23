@@ -17,10 +17,10 @@ public class mergeSorter {
         //Creating of PriorityQueue to contain current strings from files in predicted order
         PriorityQueue<Pair> queue;
         if(inAscending) {
-            queue = new PriorityQueue<>();
+            queue = new PriorityQueue<Pair>();
         }
         else{
-            queue = new PriorityQueue<>(Collections.reverseOrder());
+            queue = new PriorityQueue<Pair>(Collections.reverseOrder());
         }
 
         //Read the first line form each file and add them to the PriorityQueue
@@ -28,8 +28,14 @@ public class mergeSorter {
             String line = readers[i].readLine();
             if(line != null){
                 if(isInteger){
-                    int num = Integer.parseInt(line);
-                    queue.add(new Pair(i, num));
+                    if(line.matches("[-+]?\\d")) {
+                        int num = Integer.parseInt(line);
+                        queue.add(new Pair(i, num));
+                    }
+                    else{
+                        System.out.println("Error. Wrong file content.");
+                        return;
+                    }
                 }
                 else{
                     queue.add(new Pair(i, line));
@@ -41,13 +47,19 @@ public class mergeSorter {
         while(!queue.isEmpty()){
             Pair minPair = queue.poll();
 
-            if(isInteger) writer.write(Integer.toString((Integer)minPair.getValue()));
+            if(isInteger) writer.write(Integer.toString((Integer) minPair.getValue()));
             else writer.write((String)minPair.getValue());
             writer.newLine();
 
             String nextLine = readers[minPair.getIndex()].readLine();
             if(nextLine != null){
-                if(isInteger) queue.add(new Pair(minPair.getIndex(), Integer.parseInt(nextLine)));
+                if(isInteger){
+                    if(nextLine.matches("[-+]?\\d+")) queue.add(new Pair(minPair.getIndex(), Integer.parseInt(nextLine)));
+                    else{
+                        System.out.println("Error. Wrong file content.");
+                        return;
+                    }
+                }
                 else queue.add(new Pair(minPair.getIndex(), nextLine));
             }
         }
